@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Item from './TodoListItem';
-import './TodoList.css';
+import Item from '../todoListItem';
+import './styles.css';
 
 const TodoList = ({ list = [] }) => {  
   return <ul className="list-group to-do-list" >
