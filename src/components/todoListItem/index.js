@@ -2,24 +2,47 @@ import React, { Component } from 'react';
 import './styles.css';
 
 export default class TodoListItem extends Component {
+  state = {
+    done: false,
+    important: false,
+  };
+
   onLabelClick = () => {
-    console.log(this.props.label);
+    this.setState((state) => ({
+      done: !state.done,
+    }));
+  }
+
+  changeImportance = () => {
+    this.setState((state) => {
+      return {
+        important: !state.important,
+      };
+    });
   }
 
   render() {
-    const { id, label, important } = this.props;
-    const importantClass = important ? 'important' : '';
+    const { id, label, deleteTodo } = this.props;
+    const { done, important } = this.state;
 
-    return <li className={`list-group-item todo-list-item ${importantClass}`} key={id} >
+    let classNames = '';
+    if (important) {
+      classNames = `${classNames} important`;
+    }
+    if (done) {
+      classNames = `${classNames} done`;
+    }
+
+    return <li className={`list-group-item todo-list-item ${classNames}`} key={id} >
       <span
         className="todo-list-item-label"
         onClick={this.onLabelClick}
       >{ label }</span>
       <span className="todo-list-item-buttons">
-        <button type="button" className="btn btn-outline-success btn-sm">
+        <button type="button" onClick={this.changeImportance} className="btn btn-outline-success btn-sm">
           <i className="fa fa-exclamation" />
         </button>
-        <button type="button" className="btn btn-outline-danger btn-sm">
+        <button type="button" onClick={() => deleteTodo(id)} className="btn btn-outline-danger btn-sm">
           <i className="fa fa-trash-o" />
         </button>
       </span>

@@ -1,11 +1,18 @@
 import React from 'react';
 import './styles.css';
 
-const Header = () => {
+const Header = ({ list = [] }) => {
+  console.log({ list });
+  const more = list.filter(e => !e.done).length;
+  const done = list.filter(e => e.done).length;
+
+  const moreTodo = more === 0 ? '' : `${more} more to do`;
+  const doneTodo = done === 0 ? '' : `${done} done`;
+
   return (
     <div className="app-header" >
-      <h1>Todo List</h1>
-      <h2> 1 more to do, 3 done </h2>
+      <h1>todo app</h1>
+      <h2> {`${doneTodo ? `${moreTodo}, ` : moreTodo}${doneTodo}`} </h2>
     </div>
   );
 };
