@@ -2,7 +2,6 @@ import React from 'react';
 import './styles.css';
 
 const Header = ({ list = [] }) => {
-  console.log({ list });
   const more = list.filter(e => !e.done).length;
   const done = list.filter(e => e.done).length;
 
