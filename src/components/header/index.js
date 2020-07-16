@@ -8,11 +8,12 @@ const Header = ({ list = [] }) => {
 
   const moreTodo = more === 0 ? '' : `${more} more to do`;
   const doneTodo = done === 0 ? '' : `${done} done`;
+  const comma = doneTodo && moreTodo ? ', ' : '';
 
   return (
     <div className="app-header" >
       <h1>todo app</h1>
-      <h2> {`${doneTodo ? `${moreTodo}, ` : moreTodo}${doneTodo}`} </h2>
+      <h2> {`${moreTodo}${comma}${doneTodo}`} </h2>
     </div>
   );
 };

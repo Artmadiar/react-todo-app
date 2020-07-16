@@ -19,6 +19,8 @@ export default class App extends Component {
       important: true,
       done: false,
     }],
+    search: '',
+    status: null,
   };
 
   deleteTodo = (id) => {
@@ -43,22 +45,44 @@ export default class App extends Component {
     }));
   }
 
-  filterList = (search) => {
+  searchTodo = (search) => {
+    this.setState({ search });
+  }
+
+  filterTodo = (status) => {
+    this.setState({ status });
+  }
+
+  updateTodo = ({ id, label, done, important }) => {
     this.setState((state) => {
+      const { list } = state;
+
       return {
-        list: state.list.filter((e) => e.label.includes(search)),
-      }
-    });
+        list: list.reduce((arr, el) => {
+          if (el.id !== id) {
+            arr.push(el);
+            return arr;
+          }
+          arr.push({
+            id, label, done, important,
+          });
+          return arr;
+        }, []),
+      };
+    })
   }
 
   render() {
     return (
       <div>
         <Header list={this.state.list} />
-        <SearchPanel filterList={this.filterList} />
+        <SearchPanel searchTodo={this.searchTodo} filterTodo={this.filterTodo} status={this.state.status} />
         <TodoList
           list={this.state.list}
+          search={this.state.search}
+          status={this.state.status}
           deleteTodo={this.deleteTodo}
+          updateTodo={this.updateTodo}
         />
         <AddPanel addTodo={this.addTodo} />
       </div>
